@@ -22,5 +22,6 @@ urlpatterns = [
     path('', frontend.views.home, name='home'),
     path('oauth/redirect', frontend.views.oauth_redirect, name='oauth_redirect'),
     path('oauth/authorize', frontend.views.oauth_authorize, name='oauth_authorize'),
+    path('oauth/logout', frontend.views.oauth_logout, name='oauth_authorize'),
 
 ]

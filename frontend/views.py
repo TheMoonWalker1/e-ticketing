@@ -3,7 +3,7 @@ import os
 import json
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 User = get_user_model()
 
 from oauthlib.oauth2 import TokenExpiredError
@@ -58,5 +58,8 @@ def oauth_authorize(request):
             user.save()
             login(request, user)
 
-    # return redirect('home')
-    return render(request, 'home.html')
+    return redirect('home')
+
+def oauth_logout(request):
+    logout(request)
+    return redirect('home')
