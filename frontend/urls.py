@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api import url
+import frontend.views
 
 urlpatterns = [
-    path('api/', include())
-    path('admin/', admin.site.urls),
+    path('', frontend.views.home, name='home'),
+    path('oauth/redirect', frontend.views.oauth_redirect, name='oauth_redirect'),
+    path('oauth/authorize', frontend.views.oauth_authorize, name='oauth_authorize'),
+
 ]

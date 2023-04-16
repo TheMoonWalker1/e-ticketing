@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OAuth Redirect</title>
+</head>
+<body>
+    <h1>OAuth Redirect Page</h1>
+    <p>This is an example of an HTML page with a button that redirects to a Django URL named "oauth_redirect".</p>
+    <button onclick="redirectToOAuthRedirect()">Click here to redirect</button>
+
+    <script>
+        function redirectToOAuthRedirect() {
+            window.location.href = "{% url 'oauth_redirect' %}";
+        }
+    </script>
+</body>
+</html>
