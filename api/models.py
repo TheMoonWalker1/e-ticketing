@@ -8,6 +8,7 @@ class User(AbstractUser):
     nickname = models.CharField(max_length=50, blank=True)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=True)
+    password = None
     # picture = models.
 
     class Meta:

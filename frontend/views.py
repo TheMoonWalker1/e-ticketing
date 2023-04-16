@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import os
 import json
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, login
+User = get_user_model()
 
 from oauthlib.oauth2 import TokenExpiredError
 from requests_oauthlib import OAuth2Session
@@ -31,6 +35,28 @@ def oauth_authorize(request):
         STATE = request.GET.get('state')
         TOKEN = oauth.fetch_token("https://ion.tjhsst.edu/oauth/token/", code=CODE, client_secret=CLIENT_SECRET)
         profile = json.loads(oauth.get("https://ion.tjhsst.edu/api/profile").content.decode())
-        print(profile.get('ion_username'))
 
-    return render(request, 'home.html', {})
+        username = profile.get('ion_username')
+        email = profile.get('tj_email')
+        sex = profile.get('sex')
+        birthday = profile.get('birthday')
+        nickname = profile.get('nickname')
+        is_teacher = profile.get('is_teacher')
+        is_student = profile.get('is_student')
+        print(username)
+        print(email)
+        print(sex)
+        print(birthday)
+        print(nickname)
+        print(is_student)
+        try:
+            print("log 1")
+            login(request, User.objects.get(username=username))
+        except User.DoesNotExist:
+            print("log 2")
+            user = User(username=username, email=profile.get('tj_email'), sex=profile.get('sex'), birthday=profile.get('birthday'), nickname=profile.get('nickname'), is_teacher=profile.get('is_teacher'), is_student=profile.get('is_student'))
+            user.save()
+            login(request, user)
+
+    # return redirect('home')
+    return render(request, 'home.html')
